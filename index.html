@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="javascript.js"></script>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='styles.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css' />
+    <script src='javascript.js'></script>
     <title>Document</title>
 </head>
-<body>
-    <!--<input type='button' id='searchButton' value='search' onClick='getWeather();'/>-->
+<nav class='header-nav'>
     <form id='form'>
-        <input type='text' id='searchText'/>
-        <input type='submit' id='searchButton' value='search'/>
+        <input class='search-input' type='text' id='searchText' placeholder='search'/>
+        <i class='fa fa-search'></i>
+    </form>
+    <div style='position: absolute; height: 42.5px; padding: 20px 20px;'>
         <input type='checkbox' id='sendToAPI'/>
         <label for='sendToAPI'>Send to API?</label>
-    </form>
+    </div>
+</nav>
+<body>
 </body>
 </html>
