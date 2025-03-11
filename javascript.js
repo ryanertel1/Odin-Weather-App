@@ -1,0 +1,2 @@
+// Giphy API call(replace query w/ search term): https://api.giphy.com/v1/gifs/search?api_key=DFDiQBA00oioIPYxJbBm8qm1Qlu4yAJd&q=query&limit=1&offset=0&rating=g&lang=en&bundle=messaging_non_clips
+// VC API call(replace Dayton w/ location variable): https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Dayton?unitGroup=us&key=5KWNMEZ5PF6YZM7PGMKJS94QL&contentType=json
