@@ -67,7 +67,7 @@ form {
 
 form:hover {
     width: 300px;
-    cursor: pointer:
+    cursor: pointer;
 }
 
 form:hover .search-input {
