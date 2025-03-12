@@ -9,43 +9,47 @@
     <script src='javascript.js'></script>
     <title>Gale</title>
 </head>
-<nav class='header-nav'>
-    <form id='form'>
-        <input class='search-input' type='text' id='searchText' placeholder='search'/>
-        <i class='fa fa-search'></i>
-    </form>
-    <div style='position: absolute; height: 42.5px; padding: 20px 20px;'>
-        <input type='checkbox' id='sendToAPI'/>
-        <label for='sendToAPI'>Send to API?</label>
-    </div>
-</nav>
 <body>
-    <div class='weather-header'>weather header
-        <I class='current-icon'></I>
-        <div></div>
-        <time></time>
-    </div>
-    <div class='current-weather'>current weather</div>
-    <div class='forecast-weather'>
-        <div>
-            <div></div>
-            <I class='forecast-icon'></I>
-            <div></div>
+    <header>
+        <nav class='header-nav'>
+            <form id='form'>
+                <input class='search-input' type='text' id='searchText' placeholder='search'/>
+                <i class='fa fa-search'></i>
+            </form>
+            <div style='position: absolute; height: 42.5px; padding: 20px 20px;'>
+                <input type='checkbox' id='sendToAPI'/>
+                <label for='sendToAPI'>Send to API?</label>
+            </div>
+        </nav>
+    </header>
+    <div class='weather'>
+        <div class='weather-header weather-child'>weather header
+            <I class='current-icon'></I>
+            <div>Zurich</div>
+            <time>19:15:00</time>
         </div>
-        <div>
-            <div></div>
-            <I class='forecast-icon'></I>
-            <div></div>
-        </div>
-        <div>
-            <div></div>
-            <I class='forecast-icon'></I>
-            <div></div>
-        </div>
-        <div>
-            <div></div>
-            <I class='forecast-icon'></I>
-            <div></div>
+        <div class='current-weather'>current weather</div>
+        <div class='forecast-weather'>
+            <div>
+                <div></div>
+                <I class='forecast-icon'></I>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <I class='forecast-icon'></I>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <I class='forecast-icon'></I>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <I class='forecast-icon'></I>
+                <div></div>
+            </div>
         </div>
     </div>
 </body>

@@ -6,8 +6,35 @@
 }
 
 body {
+    display: grid;
+    grid-template-rows: 100px auto;
     padding: 0;
     margin: 0;
     height: 100vh;
     width: 100%;
 }
+
+.weather {
+    display: grid;
+    grid-template-columns: auto 450px auto;
+    grid-template-rows: auto 50px 300px 100px auto;
+    width: 100%;
+    height: 100%;
+}
+
+.weather > * {
+    grid-column-start: 2;
+}
+
+.weather-header {
+    grid-row-start: 2;
+}
+
+.current-weather {
+    grid-row-start: 3;
+}
+
+.forecast-weather {
+    grid-row-start: 4;
+}
+
