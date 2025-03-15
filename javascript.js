@@ -28,26 +28,130 @@ function getWeatherFromFile() {
     setWeatherInfo(weatherData)
 }
 
-function setWeatherInfo(weatherData) {
-    console.log(weatherData.address);
-    console.log('current time: ' + weatherData.currentConditions.datetime);
-    console.log(weatherData.currentConditions.temp);
-    selectIcon(weatherData.currentConditions.icon);
+function convertTime(dateTime) {
+    dateTime = dateTime.slice(0, -3);
+    let h = parseInt(dateTime.substr(0, 2));
+    let dayNight = 'AM'
 
-    for (let i = 0; i <= numExtraDays; i++) {
-        let d = new Date(weatherData.days[i].datetime);
-        let day = d.getDay();
-        console.log(weeklyDays[day]);
-        console.log(weatherData.days[i].temp);
-        selectIcon(weatherData.days[i].icon);
+    if (h >= 12) {
+        dayNight = 'PM';
+        if (h != 12) { h = h - 12; }
     }
+
+    let timeString = h.toString() + dateTime.slice(2) + ' ' + dayNight;
+
+    return(timeString);
 }
 
 function selectIcon(iconDescription) {
     console.log(iconDescription)
 }
 
-const weeklyDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+function setWeatherInfo(weatherData) {
+    const weatherContainer = document.createElement('div');
+    weatherContainer.className = 'weather-container'
+
+    const weatherHeader = buildWeatherHeader(weatherData.address, convertTime(weatherData.currentConditions.datetime));
+    weatherContainer.appendChild(weatherHeader);
+
+    const currentWeather = buildCurrentWeather(weatherData.currentConditions.icon, Math.round(weatherData.currentConditions.temp));
+    weatherContainer.appendChild(currentWeather);
+
+    const forecastContainer = buildForecastContainer();
+    weatherContainer.appendChild(forecastContainer);
+
+    document.body.appendChild(weatherContainer);
+
+    console.log(convertTime(weatherData.currentConditions.datetime));
+
+
+    for (let i = 0; i <= numExtraDays; i++) {
+        let d = new Date(weatherData.days[i].datetime);
+        let day = d.getDay();
+        console.log(weeklyDays[day]);
+        console.log(Math.round(weatherData.days[i].temp));
+        selectIcon(weatherData.days[i].icon);
+    }
+}
+
+function buildWeatherHeader(location, currentTime) {
+    const weatherHeader = document.createElement('div');
+    weatherHeader.className = 'weather-header';
+
+    const locationIcon = document.createElement('i');
+    locationIcon.className = ('material-symbols-outlined');
+    locationIcon.innerHTML = ('location_on');
+    weatherHeader.appendChild(locationIcon);
+
+    const headerLocation = document.createElement('div');
+    headerLocation.innerHTML = location;
+    weatherHeader.appendChild(headerLocation);
+
+    const headerTime = document.createElement('time');
+    headerTime.innerHTML = currentTime;
+    weatherHeader.appendChild(headerTime);
+
+    return(weatherHeader);
+}
+
+function buildCurrentWeather(iconDescription, temp) {
+    const currentWeatherContainer = document.createElement('div');
+    currentWeatherContainer.className = 'current-weather';
+
+    const currentWeatherIcon = document.createElement('i');
+    selectIcon(iconDescription);
+    currentWeatherContainer.appendChild(currentWeatherIcon);
+
+    const currentWeatherTemp = document.createElement('div');
+    currentWeatherTemp.innerHTML = temp;
+    currentWeatherContainer.appendChild(currentWeatherTemp);
+
+    return(currentWeatherContainer);
+}
+
+function buildForecastContainer() {
+    const forecastContainer = document.createElement('div');
+    forecastContainer.className = 'forecast-container';
+
+    for (let i = 0; i <= numExtraDays; i++) {
+        let d = new Date(weatherData.days[i].datetime);
+        let day = d.getDay();
+        let iconDescription = selectIcon(weatherData.days[i].icon)
+        let temp = Math.round(weatherData.days[i].temp)
+
+        let newDayContainer = buildForecastDay(day, iconDescription, temp);
+        newDayContainer.className = 'day-container day-container-' + (i+1).toString();
+        forecastContainer.appendChild(newDayContainer);
+
+        if (i < numExtraDays) {
+            let newSeperator = document.createElement('div');
+            newSeperator.className = 'forecast-seperator';
+            forecastContainer.appendChild(newSeperator)
+        }
+    }
+
+    return(forecastContainer);
+}
+
+function buildForecastDay(day, iconDescription, temp) {
+    console.log('day: ', day, ' temp: ', temp);
+    const newDayContainer = document.createElement('div');
+
+    const newDayText = document.createElement('div');
+    newDayText.innerHTML = weeklyDays[day];
+    newDayContainer.appendChild(newDayText);
+
+    const newDayIcon = document.createElement('i');
+    newDayIcon.className = 'forecast-icon';
+    newDayContainer.appendChild(newDayIcon);
+    
+    const newDayTemp = document.createElement('div');
+    newDayTemp.innerHTML = temp;
+    newDayContainer.appendChild(newDayTemp);
+    return(newDayContainer);
+}
+
+const weeklyDays = ['MON','TUE','WED','THU','FRI','SAT','SUN']
 const numExtraDays = 3;
 
 //Adds an event listener for form submission, prevents page reload, and grabs search query from text box
