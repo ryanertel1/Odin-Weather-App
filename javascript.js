@@ -57,13 +57,10 @@ function setWeatherInfo(weatherData) {
     const currentWeather = buildCurrentWeather(weatherData.currentConditions.icon, Math.round(weatherData.currentConditions.temp));
     weatherContainer.appendChild(currentWeather);
 
-    const forecastContainer = buildForecastContainer();
+    const forecastContainer = buildForecastContainer(weatherData);
     weatherContainer.appendChild(forecastContainer);
 
     document.body.appendChild(weatherContainer);
-
-    console.log(convertTime(weatherData.currentConditions.datetime));
-
 
     for (let i = 0; i <= numExtraDays; i++) {
         let d = new Date(weatherData.days[i].datetime);
@@ -109,7 +106,7 @@ function buildCurrentWeather(iconDescription, temp) {
     return(currentWeatherContainer);
 }
 
-function buildForecastContainer() {
+function buildForecastContainer(weatherData) {
     const forecastContainer = document.createElement('div');
     forecastContainer.className = 'forecast-container';
 
@@ -134,7 +131,6 @@ function buildForecastContainer() {
 }
 
 function buildForecastDay(day, iconDescription, temp) {
-    console.log('day: ', day, ' temp: ', temp);
     const newDayContainer = document.createElement('div');
 
     const newDayText = document.createElement('div');
