@@ -55,6 +55,11 @@ time {
     font-size: 50px;
 }
 
+.current-weather svg{
+    height: 250px;
+    width: 250px;
+}
+
 .forecast-container {
     box-shadow: 0 -1px black;
     display: grid;
@@ -77,6 +82,15 @@ time {
     width: 90px;
     justify-items: center;
     align-items: center;
+}
+
+.day-container svg{
+    height: 30px;
+    width: 30px;
+}
+
+svg {
+    fill: black;
 }
 
 

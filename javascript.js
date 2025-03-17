@@ -1,4 +1,3 @@
-// Giphy API call(replace query w/ search term): https://api.giphy.com/v1/gifs/search?api_key=DFDiQBA00oioIPYxJbBm8qm1Qlu4yAJd&q=query&limit=1&offset=0&rating=g&lang=en&bundle=messaging_non_clips
 // VC API call(replace Dayton w/ location variable): https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Dayton?unitGroup=us&elements=datetime%2Cname%2Ctemp%2Cicon%2Csource&include=fcst%2Cdays%2Ccurrent&key=5KWNMEZ5PF6YZM7PGMKJS94QL&contentType=json
 
 //verifies if the search query is valid before calling function that will make API request
@@ -43,8 +42,15 @@ function convertTime(dateTime) {
     return(timeString);
 }
 
-function selectIcon(iconDescription) {
-    console.log(iconDescription)
+async function selectIcon(iconDescription) {
+    try {
+        const response = await fetch(('https://raw.githubusercontent.com/visualcrossing/WeatherIcons/refs/heads/main/SVG/2nd%20Set%20-%20Monochrome/' + iconDescription + '.svg'), {mode: 'cors'});
+        const svgText = await response.text();
+        return svgText;
+    }
+    catch (error) {
+        console.error('failed to load SVG: ', error);
+    }
 }
 
 function setWeatherInfo(weatherData) {
@@ -61,14 +67,6 @@ function setWeatherInfo(weatherData) {
     weatherContainer.appendChild(forecastContainer);
 
     document.body.appendChild(weatherContainer);
-
-    for (let i = 0; i <= numExtraDays; i++) {
-        let d = new Date(weatherData.days[i].datetime);
-        let day = d.getDay();
-        console.log(weeklyDays[day]);
-        console.log(Math.round(weatherData.days[i].temp));
-        selectIcon(weatherData.days[i].icon);
-    }
 }
 
 function buildWeatherHeader(location, currentTime) {
@@ -95,8 +93,10 @@ function buildCurrentWeather(iconDescription, temp) {
     const currentWeatherContainer = document.createElement('div');
     currentWeatherContainer.className = 'current-weather';
 
-    const currentWeatherIcon = document.createElement('i');
-    selectIcon(iconDescription);
+    const currentWeatherIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    selectIcon(iconDescription).then(result => {
+    currentWeatherIcon.innerHTML = result;
+    })
     currentWeatherContainer.appendChild(currentWeatherIcon);
 
     const currentWeatherTemp = document.createElement('div');
@@ -113,7 +113,7 @@ function buildForecastContainer(weatherData) {
     for (let i = 0; i <= numExtraDays; i++) {
         let d = new Date(weatherData.days[i].datetime);
         let day = d.getDay();
-        let iconDescription = selectIcon(weatherData.days[i].icon)
+        let iconDescription = weatherData.days[i].icon
         let temp = Math.round(weatherData.days[i].temp)
 
         let newDayContainer = buildForecastDay(day, iconDescription, temp);
@@ -137,8 +137,10 @@ function buildForecastDay(day, iconDescription, temp) {
     newDayText.innerHTML = weeklyDays[day];
     newDayContainer.appendChild(newDayText);
 
-    const newDayIcon = document.createElement('i');
-    newDayIcon.className = 'forecast-icon';
+    const newDayIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    selectIcon(iconDescription).then(result => {
+        newDayIcon.innerHTML = result;
+        })
     newDayContainer.appendChild(newDayIcon);
     
     const newDayTemp = document.createElement('div');
