@@ -21,7 +21,7 @@ body {
     transform: translate(-50%, -50%);
     display: grid;
     grid-template-rows: 50px 380px 170px;
-    width: 400px;
+    width: clamp(300px, 60%, 400px);
     height: 600px;
     background-color: var(--tertiary-color);
     border-radius: 15px;
@@ -56,14 +56,15 @@ time {
 }
 
 .current-weather svg{
-    height: 250px;
-    width: 250px;
+    aspect-ratio: 1;
+    width: 80%;
 }
 
 .forecast-container {
     box-shadow: 0 -1px black;
     display: grid;
-    grid-template-columns: auto var(--seperator-width) auto var(--seperator-width) auto var(--seperator-width) auto;
+    grid-template-columns: clamp(60px, 90px, 90px) var(--seperator-width) clamp(60px, 90px, 90px) var(--seperator-width) clamp(60px, 90px, 90px) var(--seperator-width) clamp(60px, 90px, 90px);
+    grid-template-rows: 1fr;
     justify-content: center;
     align-content: center;
     justify-items: center;
@@ -73,13 +74,13 @@ time {
 }
 
 .forecast-seperator {
-    height: 100%;
+    height: 70%;
     width: var(--seperator-width);
     background-color: black;
 }
 
 .day-container {
-    width: 90px;
+    width: clamp(60px, 90px, 90px);
     justify-items: center;
     align-items: center;
 }
@@ -88,26 +89,3 @@ time {
     height: 30px;
     width: 30px;
 }
-
-svg {
-    fill: black;
-}
-
-
-
-/*.weather > * {
-    grid-column-start: 2;
-}
-
-.weather-header {
-    grid-row-start: 2;
-}
-
-.current-weather {
-    grid-row-start: 3;
-}
-
-.forecast-weather {
-    grid-row-start: 4;
-}*/
-

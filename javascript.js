@@ -158,6 +158,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
         event.preventDefault();
         var searchLocation = document.getElementById('searchText').value;
 
+        var oldWeatherContainers = document.getElementsByClassName('weather-container')
+        if (oldWeatherContainers) {
+            console.log(oldWeatherContainers);
+            for (const element of oldWeatherContainers) {
+                element.remove();
+            }
+            //oldWeatherContainer.remove();
+        }
+
         //checks if send to API checkbox is checked or not before calling function to verify search query (i did this to lower my API call count while i was doing some messing around early on)
         if (document.getElementById('sendToAPI').checked == true) {
             verifySearch(searchLocation);
